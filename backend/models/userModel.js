@@ -4,40 +4,39 @@ const userSchema = mongoose.Schema(
   {
     name: {
       type: String,
-      required: true,
     },
     email: {
       type: String,
-      required: true,
+      // required: true,
       unique: true,
     },
     phoneNo: {
       type: String,
-      required: true,
+      // required: true,
     },
     password: {
       type: String,
-      required: true,
+      // required: true,
     },
     gender: {
       type: String,
-      required: true,
+      // required: true,
     }, //p
     city: {
       type: String,
-      required: true,
+      // required: true,
     },
     dob: {
       type: String,
-      required: true,
+      // required: true,
     },
     sexualOrientation: {
       type: String,
-      required: true,
+      // required: true,
     }, //p
     country: {
       type: String,
-      required: true,
+      // required: true,
     },
     // primaryLanguage: {
     //   type: String,
@@ -126,7 +125,7 @@ const userSchema = mongoose.Schema(
     // },
     pic: {
       type: String,
-      required: true,
+      // required: true,
       default:
         "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg",
     },
@@ -136,17 +135,17 @@ const userSchema = mongoose.Schema(
   }
 );
 
-userSchema.methods.matchPassword = async function (enteredPassword) {
-  return await bcrypt.compare(enteredPassword, this.password);
-};
-userSchema.pre("save", async function (next) {
-  if (!this.odified) {
-    next();
-  }
+// userSchema.methods.matchPassword = async function (enteredPassword) {
+//   return await bcrypt.compare(enteredPassword, this.password);
+// };
+// userSchema.pre("save", async function (next) {
+//   if (!this.odified) {
+//     next();
+//   }
 
-  const salt = await bcrypt.genSalt(10);
-  this.password = await bcrypt.hash(this.password, salt);
-});
+//   const salt = await bcrypt.genSalt(10);
+//   this.password = await bcrypt.hash(this.password, salt);
+// });
 const User = mongoose.model("User", userSchema);
 
 module.exports = User;
