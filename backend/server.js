@@ -12,12 +12,10 @@ app.use(express.json());
 dotenv.config();
 connectDB();
 
-app.use(
-  cors({
-    origin: ["http://localhost:3000"],
-    credentials: true,
-  })
-);
+
+app.use(cors());
+
+
 
 app.get("/", (req, res) => {
   res.send("API is running");
