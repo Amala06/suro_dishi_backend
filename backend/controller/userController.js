@@ -227,6 +227,74 @@ const chatList = asyncHandler(async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 });
+const chatListNew = asyncHandler(async (req, res) => {
+  try {
+    const { _id, username, userpic, targetid, name, pic } = req.body;
+    console.log(_id);
+
+    const userchat = await User.findById(_id);
+    console.log("userchat", userchat);
+
+    const targetchat = await User.findById(targetid);
+    console.log("targetchat", targetchat);
+
+    if (!userchat) {
+      res.status(404).json({ error: "User chat not found" });
+      return;
+    }
+
+    if (!targetchat) {
+      res.status(404).json({ error: "Target user not found" });
+      return;
+    }
+
+    // Check if targetid already exists in participants array
+    const userTargetParticipant = userchat.participants.find(
+      (participant) => participant.targetid.toString() === targetid.toString()
+    );
+
+    if (!userTargetParticipant) {
+      // Add the new participant to userchat's participants array
+      userchat.participants.push({
+        targetid: targetid.toString(),
+        name,
+        pic,
+        time: "00:00",
+        message: "hi all",
+      });
+    }
+
+    // Check if _id already exists in participants array of targetchat
+    const targetUserParticipant = targetchat.participants.find(
+      (participant) => participant.targetid.toString() === _id.toString()
+    );
+
+    if (!targetUserParticipant) {
+      // Add the new participant to targetchat's participants array
+      targetchat.participants.push({
+        targetid: _id.toString(),
+        name: username,
+        pic: userpic,
+        time: "00:00",
+        message: "hi all",
+      });
+    }
+
+    // Save the updated chat to the database
+    await userchat.save();
+    await targetchat.save();
+
+    console.log("userchat line 137", userchat);
+    console.log("target", targetchat);
+
+    // Respond with success message or appropriate data
+    res.status(200).json({ message: "Participants added successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 
 module.exports = {
   registerUser,
@@ -234,5 +302,6 @@ module.exports = {
   allUsers,
   allsurro,
   chatList,
+  chatListNew,
   singleUser,
 };

@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { registerUser, chatList } = require("../controller/userController.js");
+const { registerUser, chatList, chatListNew } = require("../controller/userController.js");
 const {
   authUser,
   allsurro,
@@ -12,7 +12,7 @@ const { protect } = require("../middleware/authMiddleware.js");
 router.route("/").post(registerUser).get(allUsers);
 router.post("/login", authUser);
 router.get("/suro", allsurro);
-router.post("/chatlist", chatList);
+router.post("/chatlist", chatListNew);
 router.post("/singleuser", singleUser);
 
 module.exports = router;
