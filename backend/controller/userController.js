@@ -168,6 +168,7 @@ const chatList = asyncHandler(async (req, res) => {
     const userchat = await User.findById(_id);
     console.log("userchat", userchat);
 
+    //User->Suro
     const targetchat = await User.findById(targetid);
     console.log("targetchat", targetchat);
 
@@ -234,7 +235,7 @@ const chatListNew = asyncHandler(async (req, res) => {
 
     const userchat = await User.findById(_id);
     console.log("userchat", userchat);
-
+//user ->suro
     const targetchat = await User.findById(targetid);
     console.log("targetchat", targetchat);
 

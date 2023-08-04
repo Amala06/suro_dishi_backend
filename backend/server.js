@@ -3,6 +3,7 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 // const { chats } = require("./data/data.js");
 const connectDB = require("./config/db.js");
+const suroRoutes = require("./Routes/suroRoutes.js");
 const userRoutes = require("./Routes/userRoutes.js");
 // const chatRoutes = require("./Routes/chatRoutes.js");
 const { notFound, errorHandler } = require("./middleware/errorMiddleware.js");
@@ -20,6 +21,7 @@ app.use(cors());
 app.get("/", (req, res) => {
   res.send("API is running");
 });
+app.use("/api/surrogate", suroRoutes);
 
 app.use("/api/user", userRoutes);
 // app.use("/api/chat", chatRoutes);
