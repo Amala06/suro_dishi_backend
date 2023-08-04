@@ -180,21 +180,39 @@ const chatList = asyncHandler(async (req, res) => {
       res.status(404).json({ error: "Target user not found" });
       return;
     }
-    userchat.participants.push({
-      targetid: targetid.toString(),
-      name,
-      pic,
-      time: "00:00",
-      message: "hi all",
-    });
+    userchat.participants.push(
+      {
+        targetid: targetid.toString(),
+        name,
+        pic,
+        time: "00:00",
+        message: "hi all",
+      },
+      {
+        targetid: _id.toString(), // Convert _id to a string before pushing
+        name: username,
+        pic: userpic,
+        time: "00:00",
+        message: "hi all",
+      }
+    );
     // Add the new participant to the participants array of targetchat
-    targetchat.participants.push({
-      targetid: _id.toString(), // Convert _id to a string before pushing
-      name: username,
-      pic: userpic,
-      time: "00:00",
-      message: "hi all",
-    });
+    targetchat.participants.push(
+      {
+        targetid: _id.toString(), // Convert _id to a string before pushing
+        name: username,
+        pic: userpic,
+        time: "00:00",
+        message: "hi all",
+      },
+      {
+        targetid: targetid.toString(),
+        name,
+        pic,
+        time: "00:00",
+        message: "hi all",
+      }
+    );
 
     // Save the updated chat to the database
     await userchat.save();
