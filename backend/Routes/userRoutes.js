@@ -9,13 +9,10 @@ const {
 const { allUsers } = require("../controller/userController.js");
 const { protect } = require("../middleware/authMiddleware.js");
 
-router.route("/").post(registerUser).get( allUsers);
+router.route("/").post(registerUser).get(allUsers);
 router.post("/login", authUser);
 router.get("/suro", allsurro);
-router.post("/chatlist/:_id", chatList);
+router.post("/chatlist", chatList);
 router.get("/singleuser", singleUser);
-
-
-
 
 module.exports = router;

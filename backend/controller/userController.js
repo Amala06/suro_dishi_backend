@@ -162,8 +162,8 @@ const allUsers = asyncHandler(async (req, res) => {
 // });
 const chatList = asyncHandler(async (req, res) => {
   try {
-    const _id = req.params._id;
-    const { username, userpic, targetid, name, pic } = req.body;
+    // const _id = req.params._id;
+    const { _id,username, userpic, targetid, name, pic } = req.body;
     console.log(_id);
     const userchat = await User.findById(_id);
     console.log("userchat", userchat);
