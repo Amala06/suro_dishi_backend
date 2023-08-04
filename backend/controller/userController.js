@@ -1,6 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const User = require("../models/userModel");
 const generateToken = require("../config/generateToken");
+const Surro = require("../models/surroModel");
 
 const registerUser = asyncHandler(async (req, res) => {
   const {
@@ -163,13 +164,13 @@ const allUsers = asyncHandler(async (req, res) => {
 const chatList = asyncHandler(async (req, res) => {
   try {
     // const _id = req.params._id;
-    const { _id,username, userpic, targetid, name, pic } = req.body;
+    const { _id, username, userpic, targetid, name, pic } = req.body;
     console.log(_id);
     const userchat = await User.findById(_id);
     console.log("userchat", userchat);
 
     //User->Suro
-    const targetchat = await User.findById(targetid);
+    const targetchat = await Surro.findById(targetid);
     console.log("targetchat", targetchat);
 
     if (!userchat) {
@@ -235,8 +236,8 @@ const chatListNew = asyncHandler(async (req, res) => {
 
     const userchat = await User.findById(_id);
     console.log("userchat", userchat);
-//user ->suro
-    const targetchat = await User.findById(targetid);
+    //user ->suro
+    const targetchat = await Surro.findById(targetid);
     console.log("targetchat", targetchat);
 
     if (!userchat) {
@@ -295,7 +296,6 @@ const chatListNew = asyncHandler(async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
-
 
 module.exports = {
   registerUser,
