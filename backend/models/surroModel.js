@@ -118,6 +118,8 @@ const surroSchema = mongoose.Schema(
     },
     pic: {
       type: String,
+      default:
+        "https://hips.hearstapps.com/rover/profile_photos/67055711-c808-4a4d-811a-e7155a2bce10_1667409691.file",
       // required: true,
       //   default:
       //     "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg",
