@@ -129,12 +129,37 @@ const userSchema = mongoose.Schema(
       default:
         "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg",
     },
+    participants: [
+      {
+        targetid: {
+          type: String,
+        },
+        name: {
+          type: String,
+        },
+        pic: {
+          type: String,
+        },
+        time: {
+          type: String,
+        },
+        message: {
+          type: String,
+        },
+      },
+    ],
   },
   {
     timestamps: true,
   }
 );
-
+// Initialize the participants array with an empty array when creating a new user
+userSchema.pre("save", function (next) {
+  if (!this.participants) {
+    this.participants = [];
+  }
+  next();
+});
 // userSchema.methods.matchPassword = async function (enteredPassword) {
 //   return await bcrypt.compare(enteredPassword, this.password);
 // };

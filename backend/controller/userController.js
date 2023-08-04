@@ -50,6 +50,7 @@ const registerUser = asyncHandler(async (req, res) => {
       dob: user.dob,
       country: user.country,
       sexualOrientation: user.sexualOrientation,
+      participants: [],
       token: generateToken(user._id),
     });
   } else {
@@ -75,11 +76,24 @@ const authUser = asyncHandler(async (req, res) => {
       dob: user.dob,
       country: user.country,
       sexualOrientation: user.sexualOrientation,
+      participants: user.participants,
       token: generateToken(user._id),
     });
   } else {
     res.status(401);
     throw new Error("Invalid Email or Password");
+  }
+});
+
+const singleUser = asyncHandler(async (req, res) => {
+  try {
+    const { _id } = req.body;
+    console.log(_id);
+    const userchat = await User.findById(_id);
+    console.log("userchat", userchat);
+    res.status(200).json(userchat);
+  } catch (error) {
+    console.log(error);
   }
 });
 
@@ -109,4 +123,98 @@ const allUsers = asyncHandler(async (req, res) => {
   const users = await User.find(keyword).find({ _id: { $ne: req.user._id } });
   res.send(users);
 });
-module.exports = { registerUser, authUser, allUsers, allsurro };
+
+// const chatList = asyncHandler(async (req, res) => {
+//   try {
+//     const _id = req.body.params;
+//     const { username, userpic, targetid, name, pic } = req.body;
+
+//     const userchat = await User.findById(_id);
+//     const targetchat = await User.findById(targetid);
+
+//     // Add the new participant to the participants array
+//     // userchat.participants.push({
+//     //   targetid,
+//     //   name,
+//     //   pic,
+//     //   time: "00:00",
+//     //   message: "hi all",
+//     // });
+//     targetchat.participants.push({
+//       targetid: _id.toString(),
+//       name: username,
+//       pic: userpic,
+//       time: "00:00",
+//       message: "hi all",
+//     });
+
+//     // Save the updated chat to the database
+//     // await userchat.save();
+//     await targetchat.save();
+//     console.log("userchat line 137", userchat);
+//     console.log("target", targetchat);
+
+//     res.status(200).json(userchat);
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json({ error: "Server error" });
+//   }
+// });
+const chatList = asyncHandler(async (req, res) => {
+  try {
+    const _id = req.params._id;
+    const { username, userpic, targetid, name, pic } = req.body;
+    console.log(_id);
+    const userchat = await User.findById(_id);
+    console.log("userchat", userchat);
+
+    const targetchat = await User.findById(targetid);
+    console.log("targetchat", targetchat);
+
+    if (!userchat) {
+      res.status(404).json({ error: "User chat not found" });
+      return;
+    }
+
+    if (!targetchat) {
+      res.status(404).json({ error: "Target user not found" });
+      return;
+    }
+    userchat.participants.push({
+      targetid: targetid.toString(),
+      name,
+      pic,
+      time: "00:00",
+      message: "hi all",
+    });
+    // Add the new participant to the participants array of targetchat
+    targetchat.participants.push({
+      targetid: _id.toString(), // Convert _id to a string before pushing
+      name: username,
+      pic: userpic,
+      time: "00:00",
+      message: "hi all",
+    });
+
+    // Save the updated chat to the database
+    await userchat.save();
+    await targetchat.save();
+    console.log("userchat line 137", userchat);
+    console.log("target", targetchat);
+
+    res.status(200).json(userchat);
+    // res.status(200).json(targetchat);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
+module.exports = {
+  registerUser,
+  authUser,
+  allUsers,
+  allsurro,
+  chatList,
+  singleUser,
+};
