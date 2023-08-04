@@ -13,6 +13,6 @@ router.route("/").post(registerUser).get(allUsers);
 router.post("/login", authUser);
 router.get("/suro", allsurro);
 router.post("/chatlist", chatList);
-router.get("/singleuser", singleUser);
+router.post("/singleuser", singleUser);
 
 module.exports = router;
