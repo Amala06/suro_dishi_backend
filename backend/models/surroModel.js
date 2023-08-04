@@ -67,7 +67,7 @@ const surroSchema = mongoose.Schema(
       type: String,
       // required: true,
     },
-   
+
     expectationFromSurrogacy: {
       type: String,
       // required: true,
@@ -122,12 +122,38 @@ const surroSchema = mongoose.Schema(
       //   default:
       //     "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg",
     },
+    participants: [
+      {
+        targetid: {
+          type: String,
+        },
+        name: {
+          type: String,
+        },
+        pic: {
+          type: String,
+          default:
+            "https://hips.hearstapps.com/rover/profile_photos/67055711-c808-4a4d-811a-e7155a2bce10_1667409691.file",
+        },
+        time: {
+          type: String,
+        },
+        message: {
+          type: String,
+        },
+      },
+    ],
   },
   {
     timestamps: true,
   }
 );
-
+surroSchema.pre("save", function (next) {
+  if (!this.participants) {
+    this.participants = [];
+  }
+  next();
+});
 const Surro = mongoose.model("Surro", surroSchema);
 
 module.exports = Surro;
