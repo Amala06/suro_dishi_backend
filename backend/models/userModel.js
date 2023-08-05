@@ -148,10 +148,10 @@ const userSchema = mongoose.Schema(
         default:"",},
       default:"",},
     ],
-  default:"",},
+  },
   {
     timestamps: true,
-  default:"",}
+  }
 );
 // Initialize the participants array with an empty array when creating a new user
 userSchema.pre("save", function (next) {
