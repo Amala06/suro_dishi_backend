@@ -1,7 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const User = require("../models/userModel");
 const generateToken = require("../config/generateToken");
-const Surro = require("../models/surroModel");
+// const Surro = require("../models/surroModel");
 
 const registerUser = asyncHandler(async (req, res) => {
   const {
@@ -170,7 +170,7 @@ const chatList = asyncHandler(async (req, res) => {
     console.log("userchat", userchat);
 
     //User->Suro
-    const targetchat = await Surro.findById(targetid);
+    const targetchat = await User.findById(targetid);
     console.log("targetchat", targetchat);
 
     if (!userchat) {
@@ -237,7 +237,7 @@ const chatListNew = asyncHandler(async (req, res) => {
     const userchat = await User.findById(_id);
     console.log("userchat", userchat);
     //user ->suro
-    const targetchat = await Surro.findById(targetid);
+    const targetchat = await User.findById(targetid);
     console.log("targetchat", targetchat);
 
     if (!userchat) {
