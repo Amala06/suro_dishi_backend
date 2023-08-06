@@ -38,6 +38,26 @@ const userSchema = mongoose.Schema(
       type: String,
       // required: true,
     },
+    isSurrogate: {
+      type: String,
+      default: "false",
+      // required: true,
+    },
+    age: {
+      type: String,
+      default: "#$$**#",
+      // required: true,
+    },
+    height: {
+      type: String,
+      default: "#$$**#",
+      // required: true,
+    },
+    weight: {
+      type: String,
+      default: "#$$**#",
+      // required: true,
+    },
     // primaryLanguage: {
     //   type: String,
     //   required: true,

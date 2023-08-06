@@ -15,6 +15,10 @@ const registerUser = asyncHandler(async (req, res) => {
     city,
     dob,
     sexualOrientation,
+    age,
+    isSurrogate,
+    weight,
+    height,
   } = req.body;
 
   if (!name || !email || !password) {
@@ -37,6 +41,10 @@ const registerUser = asyncHandler(async (req, res) => {
     dob,
     country,
     sexualOrientation,
+    age,
+    isSurrogate,
+    weight,
+    height,
   });
 
   if (user) {
@@ -51,6 +59,10 @@ const registerUser = asyncHandler(async (req, res) => {
       dob: user.dob,
       country: user.country,
       sexualOrientation: user.sexualOrientation,
+      age: user.age,
+      isSurrogate: user.isSurrogate,
+      weight: user.weight,
+      height: user.height,
       participants: [],
       token: generateToken(user._id),
     });
@@ -80,11 +92,28 @@ const authUser = asyncHandler(async (req, res) => {
       country: user.country,
       sexualOrientation: user.sexualOrientation,
       participants: user.participants,
+      age: user.age,
+      isSurrogate: user.isSurrogate,
+      weight: user.weight,
+      height: user.height,
       token: generateToken(user._id),
     });
   } else {
     res.status(401);
     throw new Error("Invalid Email or Password");
+  }
+});
+
+const allSurrogate = asyncHandler(async (req, res) => {
+  // const users = await User.find();
+  // res.send(users);
+  try {
+    const MyData = await User.find({ isSurrogate: "true" });
+    // console.log(MyData); // add this line to log MyData to the console
+    res.status(200).json(MyData);
+  } catch (error) {
+    console.error(error); // add this line to log any errors to the console
+    res.status(500).json({ message: "Could not fetch the data" });
   }
 });
 
@@ -307,4 +336,5 @@ module.exports = {
   chatList,
   chatListNew,
   singleUser,
+  allSurrogate,
 };

@@ -4,6 +4,7 @@ const {
   registerUser,
   chatList,
   chatListNew,
+  allSurrogate,
 } = require("../controller/userController.js");
 const {
   authUser,
@@ -15,7 +16,7 @@ const { protect } = require("../middleware/authMiddleware.js");
 
 router.route("/").post(registerUser).get(allUsers);
 router.post("/login", authUser);
-router.get("/suro", allsurro);
+router.get("/suro", allSurrogate);
 router.post("/chatlist", chatList);
 router.post("/singleuser", singleUser);
 
